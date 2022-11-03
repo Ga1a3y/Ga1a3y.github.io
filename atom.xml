@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Ga1a3y&#39;s blog</title>
+  <icon>http://ga1a3y.github.io/icon.png</icon>
+  
+  <link href="http://ga1a3y.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://ga1a3y.github.io/"/>
+  <updated>2022-11-03T16:39:48.069Z</updated>
+  <id>http://ga1a3y.github.io/</id>
+  
+  <author>
+    <name>Ga1a3y</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://ga1a3y.github.io/2022/11/02/hello-world/"/>
+    <id>http://ga1a3y.github.io/2022/11/02/hello-world/</id>
+    <published>2022-11-02T15:59:07.041Z</published>
+    <updated>2022-11-03T16:39:48.069Z</updated>
+    
+    
+    <summary type="html">Here&#39;s something encrypted, password is required to continue reading.</summary>
+    
+    
+    
+    <category term="内网" scheme="http://ga1a3y.github.io/categories/%E5%86%85%E7%BD%91/"/>
+    
+    
+  </entry>
+  
+</feed>
