@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en" color-mode="light">
 
   <head>
   <meta charset="utf-8">
-  <meta name="author" content="zchengsite, 1451426471@qq.com" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Ga1a3y" />
+  <meta name="description" content="" />
   
   
-  <title>Ga1a3y&#39;s blog</title>
+  <title>
+    
+      Tag 
+      
+      
+      |
+    
+     Ga1a3y&#39;s blog
+  </title>
 
   
     <link rel="apple-touch-icon" href="/images/Comm Green.ico">
@@ -18,25 +28,36 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
 
   <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
   
-<link rel="stylesheet" href="/css/base.css">
-<link rel="stylesheet" href="/iconfont/iconfont.css">
-<link rel="stylesheet" href="/css/github-markdown.css">
-<link rel="stylesheet" href="/css/highlight.css">
-
 
   <!-- jquery3.3.1 -->
-  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
 
   <!-- fancybox -->
-  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
-  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
   
 <script src="/js/fancybox.js"></script>
 
 
   
 
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
 <meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Ga1a3y's blog" type="application/atom+xml">
 </head>
 
@@ -48,7 +69,7 @@
     <a href="/">
       <!-- 头像取消懒加载，添加no-lazy -->
       
-        <img src="/images/1.jpg" alt="">
+        <img src="/images/2.jpg" alt="">
       
     </a>
     <div class="nickname"><a href="/">Ga1a3y</a></div>
@@ -60,8 +81,8 @@
           <a href="/">Home</a>
         </li>
       
-        <li class="nav-item" data-path="/categories/">
-          <a href="/categories/">Categories</a>
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
         </li>
       
         <li class="nav-item" data-path="/tags/">
@@ -86,98 +107,60 @@
 <!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
 
+  <!-- LaTex Display -->
 
   
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
 
   
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
 
   
-
-  
-  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
-  <div class="container post-details" id="post-details">
-    <div class="post-content">
-      <div class="post-title"></div>
-      <div class="post-attach">
-        <span class="post-pubtime">
-          <i class="iconfont icon-updatetime" title="Update time"></i>
-          2023-04-02
-        </span>
-        
-      </div>
-      <div class="markdown-body">
-        
-      </div>
-      
-        <div class="prev-or-next">
-          <div class="post-foot-next">
-            
-          </div>
-          <div class="post-attach">
-            <span class="post-pubtime">
-              <i class="iconfont icon-updatetime" title="Update time"></i>
-              2023-04-02
-            </span>
-            
-          </div>
-          <div class="post-foot-prev">
-            
-          </div>
-        </div>
+  <!-- 分类页 url形式：https://yoursite/categories/ -->
+  <div class="container category-index">
+    <div>
       
     </div>
-    
-
-    
-      <div class="comments-container">
-        
-
-
-
-
-
-      </div>
-    
   </div>
+  
 
+  
 
-        <div class="footer">
+  
+
+  
+
+        
+<div class="footer">
   <div class="social">
     <ul>
       
         <li>
-          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Ga1a3y">
             <i class="iconfont icon-github"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="email" href="">
-            <i class="iconfont icon-envelope"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="facebook" href="">
-            <i class="iconfont icon-facebooksquare"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="twitter" href="">
-            <i class="iconfont icon-twitter"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="wechat" href="">
-            <i class="iconfont icon-wechat"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="weibo" href="">
-            <i class="iconfont icon-weibo"></i>
           </a>
         </li>
       
@@ -190,19 +173,27 @@
     </ul>
   </div>
   
+    
     <div class="footer-more">
-      <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © Oranges 2020</a>
+      
+        <a target="_blank" rel="noopener" href="https://github.com/Ga1a3y">Copyright © Ga1a3y 2023</a>
+        
     </div>
   
+    
     <div class="footer-more">
-      <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
     </div>
+  
   
 </div>
 
       </div>
 
-      <div class="back-to-top hidden">
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
   <a href="javascript: void(0)">
     <i class="iconfont icon-chevronup"></i>
   </a>
@@ -213,8 +204,8 @@
 
 
 
-      
-  <div class="search-icon" id="search-icon">
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
     <a href="javascript: void(0)">
       <i class="iconfont icon-search"></i>
     </a>
@@ -381,6 +372,14 @@
             }
             $resultContent.innerHTML = str;
           });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
         }
       });
       $(document).on('click', '#search-close-icon', function() {
@@ -398,6 +397,46 @@
 
 
 
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + tags + '&url=' + http%3A%2F%2Fexample.com%2Fcategories%2Findex.html + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/categories/index.html" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
     </div>
   </body>
 </html>

@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en" color-mode="light">
 
   <head>
   <meta charset="utf-8">
-  <meta name="author" content="zchengsite, 1451426471@qq.com" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Ga1a3y" />
+  <meta name="description" content="" />
   
   
-  <title>Hello World | Ga1a3y&#39;s blog</title>
+  <title>
+    
+      Tag 
+      
+      
+      |
+    
+     Ga1a3y&#39;s blog
+  </title>
 
   
     <link rel="apple-touch-icon" href="/images/Comm Green.ico">
@@ -18,25 +28,36 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
 
   <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
   
-<link rel="stylesheet" href="/css/base.css">
-<link rel="stylesheet" href="/iconfont/iconfont.css">
-<link rel="stylesheet" href="/css/github-markdown.css">
-<link rel="stylesheet" href="/css/highlight.css">
-
 
   <!-- jquery3.3.1 -->
-  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
 
   <!-- fancybox -->
-  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
-  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
   
 <script src="/js/fancybox.js"></script>
 
 
   
 
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
 <meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Ga1a3y's blog" type="application/atom+xml">
 </head>
 
@@ -48,7 +69,7 @@
     <a href="/">
       <!-- 头像取消懒加载，添加no-lazy -->
       
-        <img src="/images/1.jpg" alt="">
+        <img src="/images/2.jpg" alt="">
       
     </a>
     <div class="nickname"><a href="/">Ga1a3y</a></div>
@@ -60,8 +81,8 @@
           <a href="/">Home</a>
         </li>
       
-        <li class="nav-item" data-path="/categories/">
-          <a href="/categories/">Categories</a>
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
         </li>
       
         <li class="nav-item" data-path="/tags/">
@@ -86,6 +107,36 @@
 <!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
 
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
 
   
 
@@ -97,29 +148,41 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">Hello World</div>
+      <div class="post-title">tags</div>
       <div class="post-attach">
         <span class="post-pubtime">
-          <i class="iconfont icon-updatetime" title="Update time"></i>
-          2023-04-02
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2019-05-03 12:03:35
         </span>
         
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" title="漏洞复现">
+                    #漏洞复现
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
       <div class="markdown-body">
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
+        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Password error, please try again" data-whm="Password error, please try again">
+  <script id="hbeData" type="hbeData" data-hmacdigest="b426c21b7805e83bea00bc6798cfaba0b395001d29d969f5027031cb592c5d8e">10d79030e8222445804370796b90fca1d2aa4f99e8f5171f22f450be12c8bdd5</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-wave">
+      <input class="hbe hbe-input-field hbe-input-field-wave" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-wave" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-wave">Please input a password</span>
+      </label>
+      <svg class="hbe hbe-graphic hbe-graphic-wave" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+        <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
       </div>
       
         <div class="prev-or-next">
@@ -128,10 +191,21 @@
           </div>
           <div class="post-attach">
             <span class="post-pubtime">
-              <i class="iconfont icon-updatetime" title="Update time"></i>
-              2023-04-02
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2019-05-03 12:03:35
             </span>
             
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" title="漏洞复现">
+                        #漏洞复现
+                      </a>
+                    </span>
+                    
+                  </span>
+              
           </div>
           <div class="post-foot-prev">
             
@@ -140,18 +214,6 @@
       
     </div>
     
-  <div class="post-catalog" id="catalog">
-    <div class="title">Content</div>
-    <div class="catalog-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
-    </div>
-  </div>
-
-  
-<script src="/js/catalog.js"></script>
-
-
-
 
     
       <div class="comments-container">
@@ -161,48 +223,21 @@
 
 
 
+
+
       </div>
     
   </div>
 
 
-        <div class="footer">
+        
+<div class="footer">
   <div class="social">
     <ul>
       
         <li>
-          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Ga1a3y">
             <i class="iconfont icon-github"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="email" href="">
-            <i class="iconfont icon-envelope"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="facebook" href="">
-            <i class="iconfont icon-facebooksquare"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="twitter" href="">
-            <i class="iconfont icon-twitter"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="wechat" href="">
-            <i class="iconfont icon-wechat"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="weibo" href="">
-            <i class="iconfont icon-weibo"></i>
           </a>
         </li>
       
@@ -215,19 +250,27 @@
     </ul>
   </div>
   
+    
     <div class="footer-more">
-      <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © Oranges 2020</a>
+      
+        <a target="_blank" rel="noopener" href="https://github.com/Ga1a3y">Copyright © Ga1a3y 2023</a>
+        
     </div>
   
+    
     <div class="footer-more">
-      <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
     </div>
+  
   
 </div>
 
       </div>
 
-      <div class="back-to-top hidden">
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
   <a href="javascript: void(0)">
     <i class="iconfont icon-chevronup"></i>
   </a>
@@ -238,8 +281,8 @@
 
 
 
-      
-  <div class="search-icon" id="search-icon">
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
     <a href="javascript: void(0)">
       <i class="iconfont icon-search"></i>
     </a>
@@ -406,6 +449,14 @@
             }
             $resultContent.innerHTML = str;
           });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
         }
       });
       $(document).on('click', '#search-close-icon', function() {
@@ -423,6 +474,46 @@
 
 
 
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + tags + '&url=' + http%3A%2F%2Fexample.com%2F2019%2F05%2F03%2Findex%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2019/05/03/index/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
     </div>
   </body>
 </html>
