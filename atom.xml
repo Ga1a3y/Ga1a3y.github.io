@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-04-05T02:47:36.428Z</updated>
+  <updated>2023-04-26T14:21:00.611Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ClassLoader(类加载)-[Javasec]</title>
+    <link href="http://example.com/2023/04/26/[JavaSec]-ClassLoader(%E7%B1%BB%E5%8A%A0%E8%BD%BD)/"/>
+    <id>http://example.com/2023/04/26/[JavaSec]-ClassLoader(%E7%B1%BB%E5%8A%A0%E8%BD%BD)/</id>
+    <published>2023-04-26T04:03:35.000Z</published>
+    <updated>2023-04-26T14:21:00.611Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;ClassLoader-类加载&quot;&gt;&lt;a href=&quot;#ClassLoader-类加载&quot; class=&quot;headerlink&quot; title=&quot;ClassLoader(类加载)&quot;&gt;&lt;/a&gt;ClassLoader(类加载)&lt;/h1&gt;&lt;h2</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Java" scheme="http://example.com/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>由源码泄露到RCE-[Mssql]</title>
