@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Ga1a3y" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      Reflection反射-[Javasec] 
+      
+      
+      |
+    
+     Ga1a3y&#39;s blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/2.png">
+    <link rel="icon" href="/images/2.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Ga1a3y's blog" type="application/atom+xml">
+</head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/2.jpg" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Ga1a3y</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Reflection反射-[Javasec]</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-05-10 12:03:35
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/Java/" title="Java">
+                    #Java
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="Reflection反射-Javasec"><a href="#Reflection反射-Javasec" class="headerlink" title="Reflection反射-[Javasec]"></a>Reflection反射-[Javasec]</h1><h3 id="何为反射？"><a href="#何为反射？" class="headerlink" title="何为反射？"></a>何为反射？</h3><p>先创建一个<code>One</code>类，内容如下：</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091922083.png" alt="在这里插入图片描述"></p>
+<p>按照之前的学习的基础知识，使用某个类时必定知道它是什么类，是用来做什么的，通过new一个对象，再去调用<code>Hello</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">One</span> <span class="variable">one</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">One</span>();</span><br><span class="line">one.Hello();</span><br><span class="line">#结果：Hello Sn0w</span><br></pre></td></tr></table></figure>
+
+<p>现在通过反射来实现一下:</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091922203.png" alt="在这里插入图片描述"></p>
+<p>（刚接触的话可能会有很多疑惑，什么是Class类？这些方法怎么用？下面还会详细解释）</p>
+<p>通过上面的例子便可以大致了解Java反射是什么，现在系统的了解一下反射机制：可以参考<a target="_blank" rel="noopener" href="https://xz.aliyun.com/u/24696"><strong>小阳</strong></a>师傅所画的Java反射机制流程图</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091922145.png" alt="在这里插入图片描述"></p>
+<h3 id="反射机制"><a href="#反射机制" class="headerlink" title="反射机制"></a>反射机制</h3><blockquote>
+<p>反射的核心是JVM<strong>在运行状态</strong>的时候才<strong>动态</strong>加载类，对于任意一个类都能够知道这个类所有的属性和方法，并且对于任意一个对象，都能够调用它的方法/访问属性。这种<strong>动态获取</strong>信息以及<strong>动态调用</strong>对象方法的功能成为Java语言的反射机制。通过使用反射我们不仅可以获取到任何类的成员方法(Methods)、成员变量(Fields)、构造方法(Constructors)等信息，还可以动态创建Java类实例、调用任意的类方法、修改任意的类成员变量值等。 </p>
+</blockquote>
+<p>这段简介总是提到动态，有必要去理解一下什么是Java的动态特性：</p>
+<blockquote>
+<p>P神：一段代码，改变其中的变量，将会导致这段代码产生功能性的变化，称之为动态特性</p>
+</blockquote>
+<p>具体来说的话，Java反射机制可以完成如下这些操作：</p>
+<ul>
+<li>在运行时判断任意一个对象所属的类</li>
+<li>在运行时构造任意一个类的对象</li>
+<li>在运行时判断任意一个类所具有的成员变量和方法</li>
+<li>在运行时调用任意一个对象的成员变量和方法</li>
+<li>生成动态代理</li>
+</ul>
+<h4 id="反射常用的API如下："><a href="#反射常用的API如下：" class="headerlink" title="反射常用的API如下："></a><strong>反射常用的API如下：</strong></h4><p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091922358.png" alt="在这里插入图片描述"></p>
+<p>为什么上面反射的例子不能直接new一个对象再调用方法，原因便可以查询一下Class类的源码，可以看是<code>private</code>进行修饰的,使用new方法创建实例是无法访问内部信息，但是通过反射机制可以访问</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091922331.png" alt="在这里插入图片描述"></p>
+<p>接下来了解一下Class类</p>
+<h3 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h3><h4 id="Class类图如下："><a href="#Class类图如下：" class="headerlink" title="Class类图如下："></a><strong>Class类图如下：</strong></h4><p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091923246.png" alt="在这里插入图片描述"></p>
+<p>其父类为<code>Object</code>类，Object类似是一切java类的父类，即便不声明，也是默认基础了Object类</p>
+<h4 id="Class类的作用："><a href="#Class类的作用：" class="headerlink" title="Class类的作用："></a><strong>Class类的作用：</strong></h4><blockquote>
+<p>在程序运行期间，Java运行时系统会始终为所有对象维护一个<strong>运动时的类型标识</strong>。这个是标识的作用便是跟踪每个对象所属的类，然后<code>JVM</code>再利用运行时的信息选择相应的方法执行。保存这些信息的类称为<code>Class</code></p>
+</blockquote>
+<p>简单来说便是<code>Class</code>类可以帮助获取类中的值，一般都是配合反射使用的，只向<code>Class</code>提供一个类或者是一个类的类名，<code>Class</code>便可以提供很多信息。</p>
+<p>这里注意和<code>class</code>区别开来，不要混淆，<code>class</code>是java中的关键字，例如：<code>public class xxx</code>或者 <code>class xxx</code> ,在声明Java类时使用，二者并没有什么关系</p>
+<h4 id="Class类对象"><a href="#Class类对象" class="headerlink" title="Class类对象"></a><strong>Class类对象</strong></h4><p>那什么是Class类对象？</p>
+<p>通过对上面Class类的理解，便可以了解到<strong>每个类</strong>的运行时的<strong>类型信息</strong>就是用<code>Class对象</code>表示的，每一个类都有一个Class对象，编译一个新类便会产生一个Class对象。并且每个类的实例都会记得自己是由哪个Class实例所生成。</p>
+<p>Class对象的作用：可以得到一个类的完整结构</p>
+<p>通过上面的例子，知道Class对象肯定不是new出来的，而是由系统创建出来的</p>
+<blockquote>
+<p>Class类由<code>loadClass()</code>方法完成类加载，生成某个类对应的Class类对象</p>
+</blockquote>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091923190.png" alt="在这里插入图片描述"></p>
+<p>对于某个类的Class类对象，在内存中只有一份，因为类只会加载一次，例如下面的例子，可以观察到hash值相同</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091923422.png" alt="在这里插入图片描述"></p>
+<h4 id="Class类常用方法"><a href="#Class类常用方法" class="headerlink" title="Class类常用方法"></a>Class类常用方法</h4><p>Java反射操作的是<code>java.lang.Class</code>对象，所以我们需要先想办法获取到Class对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">execute</span><span class="params">(String className, String methodName)</span> <span class="keyword">throws</span> Exception &#123;    </span><br><span class="line">    <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> Class.forName(className);</span><br><span class="line">    clazz.getMethod(methodName).invoke(clazz.newInstance()); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过P神所举的例子，便可以接触到几个在反射中极为重要的方法：</p>
+<ul>
+<li>获取类的方法：<code>forName</code></li>
+<li>实例化类对象的方法：<code>newInstance</code></li>
+<li>获取函数的方法：<code>getMethod</code></li>
+<li>执行函数的方法：<code>invoke</code></li>
+</ul>
+<p>除了用<code>forName</code>方法获取类，还可以通过如下方法：</p>
+<ul>
+<li>若已知具体的类，通过类的class属性获取，该方法最为安全可靠，程序性能最高，但这种方法不属于反射</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#类名.<span class="keyword">class</span></span><br><span class="line"><span class="title class_">Class</span> clazz = Person.class;</span><br><span class="line">#需要导入类的包，依赖性太强，不导入包便会抛出编译错误</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>已知某个类的实例，通过该实例的<code>getClass()</code>方法获取Class对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> Person.getClass();</span><br></pre></td></tr></table></figure>
+
+<p>接下来通过一个例子来测试一下<code>class</code>类的创建方式都有哪些？</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091923902.png" alt="在这里插入图片描述"></p>
+<p>还有其他的方法，这里就不再列举了</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091923259.png" alt="在这里插入图片描述"></p>
+<p>通过上面的学习，对刚开始所举的例子应该就不会那么云里雾里了，但是要想搞明白Java反射，类加载是一定要理解的，但前提是要先去大致了解一下Java内存方面的知识，因为类的加载过程会涉及到的堆、栈和方法区。</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202304102143794.png" alt="在这里插入图片描述"></p>
+<h4 id="类的加载过程-ClassLoader-："><a href="#类的加载过程-ClassLoader-：" class="headerlink" title="类的加载过程(ClassLoader)："></a>类的加载过程(ClassLoader)：</h4><p>可以参考下韩顺平老师所列举的类加载过程图：</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091923811.png" alt="在这里插入图片描述"></p>
+<ul>
+<li><p><strong>加载阶段</strong>：在该阶段，JVM的主要目的是将字节码从不同的数据源转化为二进制字节流加载到内存中，并生成一个代表该类的java.lang.Class对象</p>
+</li>
+<li><p><strong>连接阶段</strong></p>
+<ul>
+<li><strong>验证</strong>：确保<code>Class</code>文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害到虚拟机自身的安全</li>
+<li><strong>准备</strong>：JVM会在该阶段对静态变量，分配内存并默认初始化(对于数据类型的默认初始值，如:0、0L、null、false)，这些变量所使用的内存都将在方法区中进行分配</li>
+</ul>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202303221527953.png" alt="在这里插入图片描述"></p>
+<ul>
+<li><strong>解析</strong>：虚拟机常量池内的符号引用（常量名）替换为直接引用（地址）的过程</li>
+</ul>
+</li>
+<li><p><strong>初始化</strong>：</p>
+<ol>
+<li>到了初始化这个阶段，才真正开始执行类中定义的Java程序代码，这个阶段是执行<code>&lt;clinit&gt;()</code>方法的过程</li>
+<li><code>&lt;clinit&gt;()</code>方法是由编译器按语句在源文件中出现的顺序，依次自动收集类中的所有<strong>静态变量</strong>的赋值动作和静态代码块中的语句，并进行合并</li>
+<li>虚拟机会保证一个类的<code>&lt;clinit&gt;()</code>方法在多线程环境中被正确地加锁、同步，如果多个线程同时去初始化一个类，那么只会有一个线程去执行这个类的<code>&lt;clinit&gt;()</code>方法，其他现场都需要阻塞等待，直到活动线程执行<code>&lt;clinit&gt;()</code>方法</li>
+</ol>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202303221614930.png" alt="在这里插入图片描述"></p>
+</li>
+</ul>
+<h5 id="那什么时候会发生类初始化？"><a href="#那什么时候会发生类初始化？" class="headerlink" title="那什么时候会发生类初始化？"></a><strong>那什么时候会发生类初始化？</strong></h5><ol>
+<li><strong>类的主动引用(一定会发生类的初始化  )</strong><ul>
+<li>当虚拟机启动，先初始化main方法所在的类</li>
+<li>new一个类的对象</li>
+<li>调用类的静态成员(除了final常量)和静态方法</li>
+<li>使用java.lang.reflect包的方法对类进行反射调用</li>
+<li>当初始化一个类，如果其父类没有被初始化，则先会初始化它的父类</li>
+</ul>
+</li>
+<li><strong>类的被动引用(不会发生类的初始化)</strong><ul>
+<li>当访问一个静态域时，只有真正声明这个域的类才会被初始化。</li>
+<li>通过数组定义类引用，不会触发此类的初始化</li>
+<li>引用常量不会触发此类的初始化(常量在链接阶段就已经存入到调用类的常量池中去了)</li>
+</ul>
+</li>
+</ol>
+<p>接下来通过一个例子来测试类什么时候会进行初始化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//测试类什么时候会初始化</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">test06</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Main类被加载&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        <span class="comment">//1.主动引用</span></span><br><span class="line"><span class="comment">//        Son son = new Son();</span></span><br><span class="line">        <span class="comment">//2.反射也会产生主动引用</span></span><br><span class="line"><span class="comment">//        Class.forName(&quot;Son&quot;);</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Father</span>&#123;</span><br><span class="line">    <span class="keyword">static</span>  <span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;父类被加载&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Son</span> <span class="keyword">extends</span> <span class="title class_">Father</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;子类被加载&quot;</span>);</span><br><span class="line">        m = <span class="number">300</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> <span class="number">100</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">M</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主动引用产生的结果：</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091923271.png" alt="在这里插入图片描述"></p>
+<p>子类调用父类的一个静态方法或者静态的变量，并不会让子类进行加载</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091923342.png" alt="在这里插入图片描述"></p>
+<p>通过上面的知识便可以对反射有一个初步的印象，接下来就来学习一下Runtime类，它在Java反射的payload中是非常常见的，通过对这个类的学习来加强对Java反射的理解</p>
+<h4 id="Java-Runtime类"><a href="#Java-Runtime类" class="headerlink" title="Java Runtime类"></a>Java Runtime类</h4><blockquote>
+<p>java.lang.Runtime因为有一个exec方法执行本地命令，所以很多payload中都可以看到反射调用Runtime类来执行本地系统命令</p>
+</blockquote>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091923764.png" alt="在这里插入图片描述"></p>
+<p>观察一下Runtime类，需要用<code>getRuntime()</code>方法来获取<code>Runtime</code>的对象，因此直接new是不行的，因为Runtime类是单例模式，所以只能通过<code>Runtime.getRuntime()</code>获得<code>Runtime</code>类的对象，然后再调用<code>Runtime</code>的内部方法，如下图所示：</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091923131.png" alt="在这里插入图片描述"></p>
+<p>这里解释一下什么是<strong>单例模式</strong>？</p>
+<blockquote>
+<p>单例模式是指在整个程序运行期间，只能初始化某个类一次，然后便一直使用这个实例</p>
+</blockquote>
+<p>若改为反射来执行系统命令，如何调用<code>Runtime</code>类的<code>exec()</code>方法，如下图所示：</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091923965.png" alt="在这里插入图片描述"></p>
+<p>这里的<code>getMethod</code>的作用便是通过反射去获取一个类的某个特定的<strong>公有方法</strong>，<code>invoke</code>的作用便是执行方法：</p>
+<ul>
+<li>如果这个方法是一个普通方法，那么第一个参数是类对象</li>
+<li>如果这个方法是一个静态方法，那么第一个参数便是类</li>
+</ul>
+<p>如果要调用私有方法(例如Runtime类中的Runtime()方法)，要怎么执行？来看一下反射调用Runtime实现本地命令执行的流程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>首先通过反射获取到Runtime对象</span><br><span class="line"><span class="type">Class</span> <span class="variable">runtimeClass</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;java.lang.Runtime&quot;</span>)</span><br><span class="line"><span class="number">2.</span>利用Runtime类的Class对象去获取Runtime类的无参构造方法</span><br><span class="line"><span class="type">Constructor</span> <span class="variable">constructor</span> <span class="operator">=</span> runtimeClass.getDeclaredConstructor();</span><br><span class="line"><span class="number">3.</span>若Runtime的构造方法是<span class="keyword">private</span>则无法直接调用,需要通过反射去修改方法的访问权限</span><br><span class="line">setAccessible(<span class="literal">true</span>);</span><br><span class="line"><span class="number">4.</span>创建Runtime类实例 <span class="comment">//相当于Runtime sn0w = new Runtime()</span></span><br><span class="line"><span class="type">object</span> <span class="variable">runtimeInstance</span> <span class="operator">=</span> constructor.newInstance();</span><br><span class="line"><span class="number">5.</span>获取Runtime的exec(string cmd)方法</span><br><span class="line"><span class="type">Method</span> <span class="variable">runtimeMethod</span> <span class="operator">=</span> runtimeClass.getMethod(<span class="string">&quot;exec&quot;</span>,String.class);</span><br><span class="line"><span class="number">6.</span>调用exec方法 </span><br><span class="line"><span class="type">Process</span> <span class="variable">runtimeMethod</span> <span class="operator">=</span> (Process) runtimeMethod.invoke(runtimeInstance,cmd);</span><br><span class="line"><span class="number">7.</span>获取命令执行结果</span><br><span class="line"><span class="type">InputStream</span> <span class="variable">in</span> <span class="operator">=</span> process.getInputStream();</span><br><span class="line"><span class="number">8.</span>输出命令执行结果</span><br><span class="line">System.out.println(IOUtils.toString(in, <span class="string">&quot;UTF-8&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码涉及到<code>getDeclaredConstructor</code>，它与<code>getConstructor</code>的区别如下：</p>
+<ul>
+<li><code>getConstructor()</code>返回指定参数类型<code>public</code>的构造器</li>
+<li><code>getDeclaredConstructor()</code>返回指定参数类型的<code>private</code>和<code>public</code>构造器</li>
+</ul>
+<p>因为Runtime这个类的构造函数是私有的，所以需要使用<code>getDeclaredConstructor</code>来获取这个私有的构造方法来实例化对象，进行执行命令。</p>
+<p>这里也简单了解一下<code>Runtime.exec()</code>的六种重载方法，官方文档如下：<code>envp</code>指定环境、<code>dir</code>指定目录</p>
+<p><img src="https://sn0w.oss-cn-shenzhen.aliyuncs.com/img/202403091923024.png" alt="在这里插入图片描述"></p>
+<p>最后列一些Class类的重要方法，便于自己查看</p>
+<h4 id="Class类的方法"><a href="#Class类的方法" class="headerlink" title="Class类的方法"></a>Class类的方法</h4><ul>
+<li><strong>获得类相关的方法</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>forName(String className)</code></td>
+<td>根据类名返回类的对象</td>
+</tr>
+<tr>
+<td><code>newInstance()</code></td>
+<td>创建类的实例</td>
+</tr>
+<tr>
+<td><code>getClassLoader()</code></td>
+<td>获得类的加载器</td>
+</tr>
+<tr>
+<td><code>getDeclaredClasses()</code></td>
+<td>返回一个数组，数组中包含该类中所有类和接口类的对象</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>获得类中属性相关的方法</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>getField(String name)</code></td>
+<td>获得某个公有的属性对象</td>
+</tr>
+<tr>
+<td><code>getFields()</code></td>
+<td>获得所有公有的属性对象</td>
+</tr>
+<tr>
+<td><code>getDeclaredField(String name)</code></td>
+<td>获得某个属性对象</td>
+</tr>
+<tr>
+<td><code>getDeclaredFields()</code></td>
+<td>获得所有属性对象</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>获得类中构造器相关的方法</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>getConstructor(Class...&lt;?&gt; parameterTypes)</code></td>
+<td>获得该类中与参数类型匹配的公有构造方法</td>
+</tr>
+<tr>
+<td><code>getConstructors</code>()</td>
+<td>获得该类的所有公有构造方法</td>
+</tr>
+<tr>
+<td><code>getDeclaredConstructor(Class...&lt;?&gt; parameterTypes)</code></td>
+<td>获得该类中与参数类型匹配的构造方法</td>
+</tr>
+<tr>
+<td><code>getDeclaredConstructors()</code></td>
+<td>获得该类所有构造方法</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>获得类中方法相关的方法</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>getMethod(String name, Class...&lt;?&gt; parameterTypes) </code></td>
+<td>获得该类某个公有的方法</td>
+</tr>
+<tr>
+<td><code>getMethods()</code></td>
+<td>获得该类所有公有的方法</td>
+</tr>
+<tr>
+<td><code>getDeclaredMethod(String name, Class...&lt;?&gt; parameterTypes) </code></td>
+<td>获得该类某个方法</td>
+</tr>
+<tr>
+<td><code>getDeclaredMethods() </code></td>
+<td>获得该类所有方法</td>
+</tr>
+</tbody></table>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><p>P神的Java安全漫谈01-03 </p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6985170068766195748#heading-2">反射的原理到使用</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1p4411P7V3?p=7">狂神说Java</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wh710107079/article/details/86294628">https://blog.csdn.net/wh710107079/article/details/86294628</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/319655.html">https://www.freebuf.com/articles/network/319655.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/chongxue91/article/details/60961086">https://blog.csdn.net/chongxue91/article/details/60961086</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9117">https://xz.aliyun.com/t/9117</a> </p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/04/26/%5BJavaSec%5D-ClassLoader(%E7%B1%BB%E5%8A%A0%E8%BD%BD)/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-05-10 12:03:35
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/Java/" title="Java">
+                        #Java
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/06/03/%5B%E6%9D%82%E9%A1%B9%5D-NAS%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BB%84%E8%A3%85%E8%BF%87%E7%A8%8B/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Reflection%E5%8F%8D%E5%B0%84-Javasec"><span class="toc-text">Reflection反射-[Javasec]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%95%E4%B8%BA%E5%8F%8D%E5%B0%84%EF%BC%9F"><span class="toc-text">何为反射？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6"><span class="toc-text">反射机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E5%B8%B8%E7%94%A8%E7%9A%84API%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-text">反射常用的API如下：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Class%E7%B1%BB"><span class="toc-text">Class类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Class%E7%B1%BB%E5%9B%BE%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-text">Class类图如下：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Class%E7%B1%BB%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9A"><span class="toc-text">Class类的作用：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Class%E7%B1%BB%E5%AF%B9%E8%B1%A1"><span class="toc-text">Class类对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Class%E7%B1%BB%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">Class类常用方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B-ClassLoader-%EF%BC%9A"><span class="toc-text">类的加载过程(ClassLoader)：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%82%A3%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BC%9A%E5%8F%91%E7%94%9F%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%9F"><span class="toc-text">那什么时候会发生类初始化？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Java-Runtime%E7%B1%BB"><span class="toc-text">Java Runtime类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Class%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">Class类的方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E5%8D%9A%E5%AE%A2"><span class="toc-text">参考博客</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Ga1a3y">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="rss" href="/atom.xml">
+            <i class="iconfont icon-rss"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/Ga1a3y">Copyright © Ga1a3y 2023</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Reflection%E5%8F%8D%E5%B0%84-%5BJavasec%5D + '&url=' + http%3A%2F%2Fexample.com%2F2023%2F05%2F10%2FJava_%25E5%258F%258D%25E5%25B0%2584%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2023/05/10/Java_%E5%8F%8D%E5%B0%84/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
